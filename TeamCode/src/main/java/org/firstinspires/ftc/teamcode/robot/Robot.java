@@ -16,8 +16,9 @@ public class Robot {
     public static ServoClass servoArmR;
     public static ServoClass servoClawL;
     public static ServoClass servoClawR;
-    public static MotorClass intakeMotor;
-    public static MotorClass launchingMotor;
+    public static MotorClass motorIntake;
+    public static MotorClass motorLaunchL;
+    public static MotorClass motorLaunchR;
     public static CameraClass aprilTagWebcam;
 
     public static MotorClass motorArm;
@@ -59,9 +60,10 @@ public class Robot {
             motorHanger = new MotorClass("motor_hanger", MAX_MOTOR_SPEED, SLEEP_TIME, false);
 //            motorPulley = new MotorClass("motor_pulley", MAX_MOTOR_SPEED,SLEEP_TIME, false);
 
-            intakeMotor = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,false);
-            launchingMotor = new MotorClass("motor_launch", MAX_MOTOR_SPEED, SLEEP_TIME, false);
-            aprilTagWebcam = new CameraClass("webcam");                                                                                              // =)
+            motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,false);
+            motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED, SLEEP_TIME, false);
+            motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED, SLEEP_TIME, true);
+            aprilTagWebcam = new CameraClass("webcam");                                                                                                                                                         // =)
 
 //            verticalLiftL.init(opMode);
 //            verticalLiftR.init(opMode);
@@ -73,8 +75,9 @@ public class Robot {
 //            motorArm.init(opMode);
             motorHanger.init(opMode);
 //            motorPulley.init(opMode);
-            intakeMotor.init(opMode);
-            launchingMotor.init(opMode);
+            motorIntake.init(opMode);
+            motorLaunchL.init(opMode);
+            motorLaunchR.init(opMode);
             aprilTagWebcam.init(opMode);
         }
 
