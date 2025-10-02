@@ -20,6 +20,7 @@ public class TeleOpMode extends LinearOpMode {
             Robot.motorIntake.motorCurrentSpeed = (gamepad1.right_bumper?1:0);
             Robot.motorLaunchL.motorCurrentSpeed = (gamepad1.x?0.7:0);
             Robot.motorLaunchR.motorCurrentSpeed = (gamepad1.x?0.7:0);
+            Robot.aprilTagWebcam.detectAprilTags();
         }
     }
 }
