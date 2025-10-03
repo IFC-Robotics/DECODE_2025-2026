@@ -16,6 +16,7 @@ public class WebcamTest extends LinearOpMode {
         aprilTagWebcam.init(this);
         waitForStart();
         telemetry.addLine("Starting OpMode...");
+        telemetry.update();
         while(opModeIsActive()){
             aprilTagWebcam.detectAprilTags();
         }
