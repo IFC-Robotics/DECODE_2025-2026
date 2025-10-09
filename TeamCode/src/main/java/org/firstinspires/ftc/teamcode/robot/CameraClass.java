@@ -31,23 +31,24 @@ public class CameraClass {
         opMode = opModeParam;
         telemetry = opMode.telemetry;
         webcam = opMode.hardwareMap.get(WebcamName.class, this.name);
-        aprilTagProcessor = new AprilTagProcessor.Builder().build();
-        //aprilTagProcessor.setDecimation(2);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(webcam)
-                .addProcessors(aprilTagProcessor)
+                .addProcessors()
                 .build();
+        aprilTagProcessor = new AprilTagProcessor.Builder().build();
+        aprilTagProcessor.setDecimation(2);
     }
     public AprilTagDetection detectAprilTags() {
         List<AprilTagDetection> currentDetections = aprilTagProcessor.getDetections();
         for (AprilTagDetection detection : currentDetections) {
-            telemetry.addLine("Found apriltag with ID " + detection.id);
-            telemetry.update();
-            if ((desiredTagId < 0) || (detection.id == desiredTagId)) {
-                aprilTagFound = true;
-                return detection;
+            if (detection.metadata != null) {
+                telemetry.addLine("Found apriltag with ID " + detection.id);
+                if ((desiredTagId < 0) || (detection.id == desiredTagId)) {
+                    aprilTagFound = true;
+                    return detection;
+                }
+                aprilTagFound = false;
             }
-            aprilTagFound = false;
         }
         return null;
     }

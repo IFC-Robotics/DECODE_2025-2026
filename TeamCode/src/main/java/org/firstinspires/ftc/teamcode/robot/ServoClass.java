@@ -84,8 +84,7 @@ public class ServoClass {
 
     }
 
-    // teleOp
-
+    //
     public void teleOpAssistMode(boolean minConditionButton, boolean medConditionButton, boolean maxConditionButton) {
 
         // you can only move servoDeposit from collect -> score IF verticalLift is above LOW (600)
