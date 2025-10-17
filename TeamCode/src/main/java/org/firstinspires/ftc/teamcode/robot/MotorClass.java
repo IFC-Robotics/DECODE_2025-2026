@@ -82,6 +82,28 @@ public class MotorClass {
 
     }
 
+    public void teleOpBool(boolean button) {
+        float speed = 0;
+        if (button) {
+            speed = 1;
+        }
+
+        motor.setPower(speed * maxSpeed);
+
+        printData();
+    }
+
+    public void teleOpBool1(boolean button) {
+        float speed = 0;
+        if (button) {
+            speed = -1;
+        }
+
+        motor.setPower(speed * maxSpeed);
+
+        printData();
+    }
+
 
     public void printData() {
         telemetry.addLine(String.format("\n%1$s Running: %2$s", this.name, motor.isBusy()));

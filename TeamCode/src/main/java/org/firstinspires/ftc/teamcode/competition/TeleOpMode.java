@@ -16,11 +16,11 @@ public class TeleOpMode extends LinearOpMode {
         waitForStart();
         telemetry.addLine("Starting OpMode...");
         while(opModeIsActive()){
-            Robot.drivetrain.teleOp(-gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x,gamepad1.x||gamepad1.y);
-            Robot.motorIntake.motorCurrentSpeed = (gamepad1.right_bumper?1:0);
-            Robot.motorLaunchL.motorCurrentSpeed = (gamepad1.x?0.7:0);
-            Robot.motorLaunchR.motorCurrentSpeed = (gamepad1.x?0.7:0);
-            Robot.motorConveyor.motorCurrentSpeed = (gamepad1.y?0.5:0);
+            Robot.drivetrain.teleOp(-gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x,gamepad1.left_bumper);
+            Robot.motorIntake.teleOpBool(gamepad1.b);
+            Robot.motorLaunchL.teleOpBool(gamepad1.right_bumper);
+            Robot.motorLaunchR.teleOpBool(gamepad1.right_bumper);
+            Robot.motorConveyor.teleOpBool(gamepad1.y);
             //Robot.aprilTagWebcam.detectAprilTags();
         }
     }

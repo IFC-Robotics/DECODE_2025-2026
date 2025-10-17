@@ -42,28 +42,28 @@ public class Robot {
         telemetry.update();
 
 
-        drivetrain     = new Drivetrain("collector", SLEEP_TIME);
+        drivetrain     = new Drivetrain("launcher", SLEEP_TIME);
         drivetrain.init(opMode);
 
-        if (onlyDrive == false) {
+        if (!onlyDrive) {
 //
-            servoLauncher = new ServoClass("servo_launcher", "up", 0.05, "middle",0.3 ,"down",0.38, SERVO_SPEED, SERVO_TIME, false);
-            motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,false);
-            motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED, SLEEP_TIME, false);
-            motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED, SLEEP_TIME, true);
+//            servoLauncher = new ServoClass("servo_launcher", "up", 0.05, "middle",0.3 ,"down",0.38, SERVO_SPEED, SERVO_TIME, false);
+            motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,true);
+            motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.5, SLEEP_TIME, false);
+            motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.5, SLEEP_TIME, true);
             motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, false);
-            aprilTagWebcam = new CameraClass("webcam");                                                                                                                                                         // =)
+//            aprilTagWebcam = new CameraClass("webcam");                                                                                                                                                         // =)
 
 //            verticalLiftL.init(opMode);
 //            verticalLiftR.init(opMode);
-            servoLauncher.init(opMode);
+//            servoLauncher.init(opMode);
 
 //            motorPulley.init(opMode);
             motorIntake.init(opMode);
             motorLaunchL.init(opMode);
             motorLaunchR.init(opMode);
             motorConveyor.init(opMode);
-            aprilTagWebcam.init(opMode);
+//            aprilTagWebcam.init(opMode);
         }
 
 

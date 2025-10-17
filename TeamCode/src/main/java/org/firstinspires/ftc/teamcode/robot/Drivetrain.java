@@ -2,8 +2,11 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import java.util.Objects;
 
 public class Drivetrain {
     //
@@ -39,9 +42,12 @@ public class Drivetrain {
         motorBackRight  = opMode.hardwareMap.get(DcMotor.class, "motor_back_right");
         motorBackLeft   = opMode.hardwareMap.get(DcMotor.class, "motor_back_left");
 
-        if (this.forwardDirection == "collector") {
+        if (Objects.equals(this.forwardDirection, "collector")) {
             motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
             motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        } else if (Objects.equals(this.forwardDirection, "launcher")) {
+            motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+            motorBackRight.setDirection(DcMotor.Direction.REVERSE);
         }
 
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
