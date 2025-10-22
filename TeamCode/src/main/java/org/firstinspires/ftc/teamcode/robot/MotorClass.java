@@ -86,7 +86,7 @@ public class MotorClass {
         double speed = 0;
         if (button1 || reverseButton){
             if (halfPower) {
-                speed = 0.5;
+                speed = 0.75;
             } else {
                 speed = 1;
             }
