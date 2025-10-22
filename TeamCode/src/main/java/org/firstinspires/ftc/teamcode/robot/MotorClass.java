@@ -82,21 +82,17 @@ public class MotorClass {
 
     }
 
-    public void teleOpBool(boolean button) {
-        float speed = 0;
-        if (button) {
-            speed = 1;
-        }
-
-        motor.setPower(speed * maxSpeed);
-
-        printData();
-    }
-
-    public void teleOpBool1(boolean button) {
-        float speed = 0;
-        if (button) {
-            speed = -1;
+    public void teleOpBool(boolean button1, boolean reverseButton, boolean halfPower) {
+        double speed = 0;
+        if (button1 || reverseButton){
+            if (halfPower) {
+                speed = 0.5;
+            } else {
+                speed = 1;
+            }
+            if (reverseButton) {
+                speed *= -1;
+            }
         }
 
         motor.setPower(speed * maxSpeed);

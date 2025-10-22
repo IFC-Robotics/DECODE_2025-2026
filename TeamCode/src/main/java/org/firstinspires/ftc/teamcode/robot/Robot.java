@@ -23,7 +23,7 @@ public class Robot {
     //    public static MotorClass motorPulley;
 
     public static double MAX_LIFT_SPEED = 0.2;
-    public static double MAX_MOTOR_SPEED = 0.7;
+    public static double MAX_MOTOR_SPEED = 1.0;
     public static double SERVO_SPEED = 0.01;
     public static int SERVO_TIME = 800;
     public static int CR_SERVO_TIME = 1600;
@@ -49,8 +49,8 @@ public class Robot {
 //
 //            servoLauncher = new ServoClass("servo_launcher", "up", 0.05, "middle",0.3 ,"down",0.38, SERVO_SPEED, SERVO_TIME, false);
             motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,true);
-            motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.5, SLEEP_TIME, false);
-            motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.5, SLEEP_TIME, true);
+            motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, false);
+            motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, true);
             motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, false);
 //            aprilTagWebcam = new CameraClass("webcam");                                                                                                                                                         // =)
 
