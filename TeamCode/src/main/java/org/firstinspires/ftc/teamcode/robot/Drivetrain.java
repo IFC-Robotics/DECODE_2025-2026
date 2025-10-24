@@ -99,7 +99,7 @@ public class Drivetrain {
 
         telemetry.addLine(String.format("\nturning %s degrees", angle));
 
-        double radius = 2;
+        double radius = 2.2;
         double circumference = 2 * Math.PI * radius;
         double distance = circumference * angle / 360;
         int target = (int)(distance * TURN_FACTOR);
