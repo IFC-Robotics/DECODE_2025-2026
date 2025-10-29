@@ -15,7 +15,7 @@ public class TeleOpMode extends LinearOpMode {
         telemetry.update();
         VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        Robot.init(this,false);
+        Robot.init(this,false,true);
         waitForStart();
         telemetry.addLine("Starting OpMode...");
         while(opModeIsActive()){

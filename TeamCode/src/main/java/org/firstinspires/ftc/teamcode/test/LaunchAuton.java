@@ -11,7 +11,7 @@ public class LaunchAuton extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        Robot.init(this, false);
+        Robot.init(this, false, false);
         waitForStart();
         Robot.drivetrain.drive(34,0.5);
         Robot.drivetrain.turn(180,0.5);

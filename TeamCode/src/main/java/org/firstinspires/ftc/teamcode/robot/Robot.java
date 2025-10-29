@@ -34,7 +34,7 @@ public class Robot {
 
     // initialize
 
-    public static void init(LinearOpMode opMode, boolean onlyDrive) {
+    public static void init(LinearOpMode opMode, boolean onlyDrive, boolean useCamera) {
 
         telemetry = opMode.telemetry;
 
@@ -52,7 +52,10 @@ public class Robot {
             motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, false);
             motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, true);
             motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, false);
-//            aprilTagWebcam = new CameraClass("webcam");                                                                                                                                                         // =)
+            if(useCamera){
+                aprilTagWebcam = new CameraClass("webcam");
+                aprilTagWebcam.init(opMode);
+            }
 
 //            verticalLiftL.init(opMode);
 //            verticalLiftR.init(opMode);
@@ -63,7 +66,7 @@ public class Robot {
             motorLaunchL.init(opMode);
             motorLaunchR.init(opMode);
             motorConveyor.init(opMode);
-//            aprilTagWebcam.init(opMode);
+
         }
 
 

@@ -10,7 +10,7 @@ public class AutonomousMode extends LinearOpMode{
         telemetry.addLine("Initializing Auto...");
         telemetry.update();
 
-        Robot.init(this,false);
+        Robot.init(this,false,false);
         waitForStart();
         telemetry.addLine("Starting Auto...");
             Robot.drivetrain.drive (30, 1.0);
