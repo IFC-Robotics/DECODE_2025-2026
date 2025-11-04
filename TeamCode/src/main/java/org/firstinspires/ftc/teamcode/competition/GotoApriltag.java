@@ -39,6 +39,7 @@ public class GotoApriltag extends LinearOpMode {
                 double rangeError = (apriltag.ftcPose.range - DESIRED_DISTANCE);
                 double headingError = apriltag.ftcPose.bearing;
                 double yawError = apriltag.ftcPose.yaw;
+                double xError = apriltag.ftcPose.x;
                 double SPEED_GAIN = 0.02;
                 double STRAFE_GAIN = 0.015;
                 double TURN_GAIN = 0.01;
@@ -46,7 +47,7 @@ public class GotoApriltag extends LinearOpMode {
                 double MAX_AUTO_STRAFE = 0.5;
                 double MAX_AUTO_TURN  = 0.3;
                 double drive = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
-                double strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
+                double strafe = Range.clip(-xError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
                 double turn = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
                 Robot.drivetrain.teleOp(drive,strafe,turn,false);
             }
