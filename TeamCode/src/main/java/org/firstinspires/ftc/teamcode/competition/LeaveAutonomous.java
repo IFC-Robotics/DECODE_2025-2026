@@ -10,7 +10,7 @@ public class LeaveAutonomous extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Robot.init(this, false);
+        Robot.init(this, false,false);
         waitForStart();
         Robot.drivetrain.drive(10,0.5);
 

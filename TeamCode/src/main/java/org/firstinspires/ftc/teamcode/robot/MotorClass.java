@@ -46,8 +46,10 @@ public class MotorClass {
 
     // autonomous
 
-    public void runToPosition(int position) { runToPosition(position, false, this.maxSpeed); }
-    public void runToPosition(int position, boolean isSynchronous) { runToPosition(position, isSynchronous, this.maxSpeed); }
+    public void runToPosition(int position) {
+        runToPosition(position, false, this.maxSpeed); }
+    public void runToPosition(int position, boolean isSynchronous) {
+        runToPosition(position, isSynchronous, this.maxSpeed); }
 
     public void runToPosition(int position, boolean isSynchronous, double speed) {
         int target = position;
