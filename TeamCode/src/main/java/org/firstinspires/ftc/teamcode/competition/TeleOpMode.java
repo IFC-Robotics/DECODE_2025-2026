@@ -20,7 +20,7 @@ public class TeleOpMode extends LinearOpMode {
         telemetry.addLine("Starting OpMode...");
         while(opModeIsActive()){
             double voltage = voltageSensor.getVoltage();
-            Robot.drivetrain.teleOp(-gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x,gamepad1.left_trigger > 0);
+            Robot.drivetrain.teleOp(gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x,gamepad1.left_trigger > 0);
             Robot.motorIntake.teleOpBool(gamepad1.b, false, false);
             Robot.motorLaunchR.teleOpBool(gamepad1.left_bumper, false, voltage>11);
             Robot.motorLaunchL.teleOpBool(gamepad1.left_bumper, false, voltage>11);
