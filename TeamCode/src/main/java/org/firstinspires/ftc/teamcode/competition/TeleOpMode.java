@@ -22,9 +22,9 @@ public class TeleOpMode extends LinearOpMode {
             double voltage = voltageSensor.getVoltage();
             Robot.drivetrain.teleOp(gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x,gamepad1.left_trigger > 0);
             Robot.motorIntake.teleOpBool(gamepad1.b, false, false);
-            Robot.motorLaunchR.teleOpBool(gamepad1.left_bumper, false, voltage>11);
-            Robot.motorLaunchL.teleOpBool(gamepad1.left_bumper, false, voltage>11);
-            Robot.motorConveyor.teleOpBool(gamepad1.y, gamepad1.a,  false);
+            Robot.motorLaunchR.teleOpBool(gamepad2.left_bumper || gamepad1.left_bumper, gamepad2.left_trigger > 0, voltage>11);
+            Robot.motorLaunchL.teleOpBool(gamepad2.left_bumper || gamepad1.left_bumper, gamepad2.left_trigger > 0, voltage>11);
+            Robot.motorConveyor.teleOpBool(gamepad2.a || gamepad1.a, gamepad2.y || gamepad1.y,  false);
 
             //Robot.aprilTagWebcam.detectAprilTags();
         }
