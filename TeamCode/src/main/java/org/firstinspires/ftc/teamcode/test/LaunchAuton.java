@@ -16,19 +16,26 @@ public class LaunchAuton extends LinearOpMode {
         Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
 //        Robot.drivetrain.drive(-34,0.5);
 //        Robot.drivetrain.turn(180,0.5);
-        int target = 25000;
-
-        Robot.motorConveyor.motor.setTargetPosition(25000);
-        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorConveyor.motor.setPower(1);
+        int target = 5000;
 
         Robot.motorLaunchR.motor.setTargetPosition(target);
         Robot.motorLaunchR.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchR.motor.setPower(0.35);
+        Robot.motorLaunchR.motor.setPower(0.31);
 
         Robot.motorLaunchL.motor.setTargetPosition(target);
         Robot.motorLaunchL.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchL.motor.setPower(0.35);
+        Robot.motorLaunchL.motor.setPower(0.31);
+
+        sleep(2000);
+        Robot.motorConveyor.motor.setTargetPosition(200);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorConveyor.motor.setPower(1);
+        sleep(500);
+        Robot.motorConveyor.motor.setTargetPosition(200);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorConveyor.motor.setPower(1);
+
 
 
         while (opModeIsActive() && Robot.motorLaunchR.motor.isBusy()) {
@@ -39,6 +46,9 @@ public class LaunchAuton extends LinearOpMode {
 
         // Optional: Stop the motor after reaching position
         Robot.motorLaunchR.motor.setPower(0);
+        Robot.motorLaunchR.motor.setPower(0);
+        Robot.motorConveyor.motor.setPower(0);
+
     }
 
     }
