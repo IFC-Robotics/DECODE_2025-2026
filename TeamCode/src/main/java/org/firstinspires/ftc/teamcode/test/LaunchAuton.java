@@ -18,9 +18,9 @@ public class LaunchAuton extends LinearOpMode {
 //        Robot.drivetrain.turn(180,0.5);
         int target = 25000;
 
-        Robot.motorConveyor.motor.setTargetPosition(-25000);
+        Robot.motorConveyor.motor.setTargetPosition(25000);
         Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorConveyor.motor.setPower(-1);
+        Robot.motorConveyor.motor.setPower(1);
 
         Robot.motorLaunchR.motor.setTargetPosition(target);
         Robot.motorLaunchR.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
