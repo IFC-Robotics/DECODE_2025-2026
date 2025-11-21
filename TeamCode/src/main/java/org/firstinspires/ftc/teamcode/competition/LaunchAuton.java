@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.test;
+package org.firstinspires.ftc.teamcode.competition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.robot.MotorClass;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Autonomous(name="LaunchAuton", group="Competition")
@@ -16,27 +15,33 @@ public class LaunchAuton extends LinearOpMode {
         Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
 //        Robot.drivetrain.drive(-34,0.5);
 //        Robot.drivetrain.turn(180,0.5);
-        int target = 5000;
+        int target = 5500;
 
         Robot.motorLaunchR.motor.setTargetPosition(target);
         Robot.motorLaunchR.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchR.motor.setPower(0.31);
+        Robot.motorLaunchR.motor.setPower(0.35);
 
         Robot.motorLaunchL.motor.setTargetPosition(target);
         Robot.motorLaunchL.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchL.motor.setPower(0.31);
+        Robot.motorLaunchL.motor.setPower(0.35);
 
         sleep(2000);
         Robot.motorConveyor.motor.setTargetPosition(200);
         Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.motorConveyor.motor.setPower(1);
-        sleep(500);
-        Robot.motorConveyor.motor.setTargetPosition(200);
+        sleep(1500);
+        Robot.motorConveyor.motor.setTargetPosition(1000);
         Robot.motorConveyor.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Robot.motorConveyor.motor.setPower(1);
 
+        sleep(1500);
 
+        Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
+
+        sleep(1500);
+
+        Robot.drivetrain.moveDrivetrain(1500, -1500, -1500, 1500, -0.5, 0.5, 0.5, -0.5, true);
 
         while (opModeIsActive() && Robot.motorLaunchR.motor.isBusy()) {
             telemetry.addData("Launch Motor Position", Robot.motorLaunchR.motor.getCurrentPosition());
