@@ -26,6 +26,7 @@ public class TeleOpMode extends LinearOpMode {
             Robot.motorLaunchL.teleOpBool(gamepad2.left_bumper || gamepad1.left_bumper, gamepad2.left_trigger > 0, voltage>11);
             Robot.motorConveyor.teleOpBool(gamepad2.a || gamepad1.a, gamepad2.y || gamepad1.y,  false);
 
+            Robot.servoLauncher.teleOpAssistMode(gamepad1.right_bumper, false, gamepad1.right_trigger > 0.1);
             //Robot.aprilTagWebcam.detectAprilTags();
         }
     }

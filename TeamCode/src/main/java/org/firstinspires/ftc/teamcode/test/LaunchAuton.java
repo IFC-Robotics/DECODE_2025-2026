@@ -46,9 +46,6 @@ public class LaunchAuton extends LinearOpMode {
 
         // Optional: Stop the motor after reaching position
         Robot.motorLaunchR.motor.setPower(0);
-        Robot.motorLaunchR.motor.setPower(0);
-        Robot.motorConveyor.motor.setPower(0);
-
     }
 
     }
