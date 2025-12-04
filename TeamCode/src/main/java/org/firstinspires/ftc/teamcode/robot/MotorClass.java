@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -10,7 +11,7 @@ public class MotorClass {
     public LinearOpMode opMode;
     Telemetry telemetry;
 
-    public DcMotor motor;
+    public DcMotorEx motor;
     public double  motorCurrentSpeed = 0;
     public boolean continuous = false;
 
@@ -33,7 +34,7 @@ public class MotorClass {
         opMode = opModeParam;
         telemetry = opMode.telemetry;
 
-        motor = opMode.hardwareMap.get(DcMotor.class, this.name);
+        motor = opMode.hardwareMap.get(DcMotorEx.class, this.name);
 
         if (this.reverseDirection) motor.setDirection(DcMotor.Direction.REVERSE);
 
