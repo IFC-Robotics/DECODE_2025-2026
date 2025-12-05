@@ -56,7 +56,7 @@ public class ServoClass {
 //        }
 
         // reset arms servos
-        if (this.name == "servo_arm_right" || this.name == "servo_claw_right") {
+        if (this.name == "servo_launcher" || this.name == "servo_claw_right") {
             servo.setPosition(maxPosition);
 
         }
