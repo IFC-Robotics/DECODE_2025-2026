@@ -1,0 +1,77 @@
+package org.firstinspires.ftc.teamcode.competition;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.robot.Robot;
+
+@Autonomous(name="LaunchAutonRed", group="Competition")
+public class LaunchAutonRed extends LinearOpMode {
+    @Override
+    public void runOpMode() {
+        Robot.init(this, false,false);
+        waitForStart();
+        Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
+//        Robot.drivetrain.drive(-34,0.5);
+//        Robot.drivetrain.turn(180,0.5);
+        int target = 9500;
+
+        Robot.motorLaunchR.motor.setTargetPosition(target);
+        Robot.motorLaunchR.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorLaunchR.motor.setPower(0.35);
+
+        Robot.motorLaunchL.motor.setTargetPosition(target);
+        Robot.motorLaunchL.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorLaunchL.motor.setPower(0.35);
+        Robot.servoLauncher.runToPosition("up");
+
+        sleep(2000);
+//        Robot.motorConveyor.motor.setTargetPosition(200);
+//        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        Robot.motorConveyor.motor.setPower(1);
+        sleep(500);
+        Robot.servoLauncher.runToPosition("down");
+        sleep(1000);
+        Robot.servoLauncher.runToPosition("up");
+        sleep(1500);
+        Robot.motorConveyor.motor.setTargetPosition(1500);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorConveyor.motor.setPower(1);
+
+        sleep(1000);
+
+        Robot.servoLauncher.runToPosition("down");
+        sleep(1000);
+        Robot.servoLauncher.runToPosition("up");
+        sleep(500);
+        Robot.motorIntake.motor.setTargetPosition(1500);
+        Robot.motorIntake.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.motorIntake.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorIntake.motor.setPower(1);
+        sleep(1000);
+        Robot.motorConveyor.motor.setTargetPosition(2500);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Robot.motorConveyor.motor.setPower(1);
+        sleep(1500);
+        Robot.servoLauncher.runToPosition("down");
+        sleep(1000);
+        Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
+
+        sleep(1500);
+
+        Robot.drivetrain.moveDrivetrain(-1500, 1500, 1500, -1500, 0.5, -0.5, -0.5, 0.5, true);
+
+        while (opModeIsActive() && Robot.motorLaunchR.motor.isBusy()) {
+            telemetry.addData("Launch Motor Position", Robot.motorLaunchR.motor.getCurrentPosition());
+            telemetry.addData("Target", target);
+            telemetry.update();
+        }
+
+        // Optional: Stop the motor after reaching position
+        Robot.motorLaunchR.motor.setPower(0);
+    }
+
+}
