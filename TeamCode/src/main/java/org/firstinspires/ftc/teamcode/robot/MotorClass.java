@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class MotorClass {
 
     public LinearOpMode opMode;
-    Telemetry telemetry;
+    public Telemetry telemetry;
 
     public DcMotorEx motor;
     public double  motorCurrentSpeed = 0;

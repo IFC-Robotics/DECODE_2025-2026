@@ -49,7 +49,7 @@ public class Robot {
         if (!onlyDrive) {
 //
             servoLauncher = new ServoClass("servo_launcher", "down", 0, "middle",0.3 ,"up",0.5, SERVO_SPEED, SERVO_TIME, false);
-            servoFlipper = new ServoClass("divider_servo", "down", 0.1, "middle",0.3 ,"up",0.5, SERVO_SPEED, SERVO_TIME, false);
+            servoFlipper = new ServoClass("divider_servo", "down", 0, "middle",0.3 ,"up",0.4, SERVO_SPEED, SERVO_TIME, false);
 
             motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,true);
             motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, false);

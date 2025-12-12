@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-@Autonomous(name="LaunchAuton", group="Competition")
+@Autonomous(name="LaunchAutonBlue", group="Competition")
 public class LaunchAuton extends LinearOpMode {
     @Override
     public void runOpMode() {
