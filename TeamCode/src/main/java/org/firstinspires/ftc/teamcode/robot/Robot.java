@@ -65,11 +65,10 @@ public class Robot {
               servoLauncher.init(opMode);
               servoFlipper.init(opMode);
 
-
 //            motorPulley.init(opMode);
             motorIntake.init(opMode);
-            motorLaunchL.init(opMode);
-            motorLaunchR.init(opMode);
+            motorLaunchL.init(opMode, false, new double[]{0.0004, 0, 0.0002, 0.00066}, 0.97, 1700);
+            motorLaunchR.init(opMode, false, new double[]{0.0003, 0, 0.0003, 0.000564}, 0.97, 1700);
             motorConveyor.init(opMode);
 
         }

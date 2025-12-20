@@ -16,7 +16,7 @@ public class runMotor extends LinearOpMode{
         telemetry.addLine("Initializing opMode...");
         telemetry.update();
 
-        motor  = hardwareMap.get(DcMotor.class, "motor1");
+        motor  = hardwareMap.get(DcMotor.class, "motor");
 
         waitForStart();
 
