@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import android.graphics.Camera;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -28,6 +30,12 @@ public class Robot {
     public static int CR_SERVO_TIME = 1600;
     public static int SLEEP_TIME = 50;
 
+    public static double[] LAUNCH_L_PID_COEFFS = new double[]{0.0002, 0, 0.0001, 0.000626};
+    public static double[] LAUNCH_R_PID_COEFFS = new double[]{0.0003, 0, 0.0003, 0.00055};
+    public static double cutoffFreq1 = 5;
+    public static double cutoffFreq2 = 0.5;
+    public static int targetRPM = 1900;
+
     public static String mode = "assist";
 
 
@@ -52,7 +60,7 @@ public class Robot {
             motorIntake = new MotorClass("motor_intake", MAX_MOTOR_SPEED, SLEEP_TIME,true);
             motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, false);
             motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, true);
-            motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, false);
+            motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, true);
             if(useCamera){
                 aprilTagWebcam = new CameraClass("webcam");
                 aprilTagWebcam.init(opMode);
@@ -65,8 +73,8 @@ public class Robot {
 
 //            motorPulley.init(opMode);
             motorIntake.init(opMode);
-            motorLaunchL.init(opMode, false, new double[]{0.0004, 0, 0.0002, 0.00066}, 0.97, 1700);
-            motorLaunchR.init(opMode, false, new double[]{0.0003, 0, 0.0003, 0.000564}, 0.97, 1700);
+            motorLaunchL.init(opMode, false, LAUNCH_L_PID_COEFFS, cutoffFreq1, cutoffFreq2);
+            motorLaunchR.init(opMode, false, LAUNCH_R_PID_COEFFS, cutoffFreq1, cutoffFreq2);
             motorConveyor.init(opMode);
 
         }

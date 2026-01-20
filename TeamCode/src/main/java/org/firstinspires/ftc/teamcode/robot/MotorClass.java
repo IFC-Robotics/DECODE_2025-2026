@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.test.BiquadLowPass;
+
+import java.util.List;
 
 public class MotorClass {
 
@@ -13,7 +16,8 @@ public class MotorClass {
     public Telemetry telemetry;
 
     public DcMotorEx motor;
-    public double  motorCurrentSpeed = 0;
+    public double  motorCurrentPower = 0;
+    public double  motorRawVelocity = 0;
     public boolean continuous = false;
 
     public final String name;
@@ -21,20 +25,19 @@ public class MotorClass {
     public final int sleepTime;
     public final boolean reverseDirection;
     public double[] PIDCoeffs;
-    public double alpha;
     public int targetRPM;
 
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime loopTimer = new ElapsedTime();
     public static double LOOP_PERIOD = 0.02;
+    double sampleHz = 1 / LOOP_PERIOD;
 
     double integralSum = 0;
     double lastError = 0;
     double filteredVelocity = 0;
-    int windowSize = 25;
-    double[] velocities = new double[windowSize];
-    double avgV;
     double ticksPerRev = 28;
+
+    BiquadLowPass Biquadfilter;
 
     public MotorClass(String name, double maxSpeed, int sleepTime, boolean reverseDirection) {
 
@@ -49,24 +52,25 @@ public class MotorClass {
         init(opModeParam, true, new double[]{0.0}, 0, 0);
     }
 
-    public void init(LinearOpMode opModeParam, boolean encoders, double[] PIDCoeffs, double alpha, int targetRPM) {
+    public void init(LinearOpMode opModeParam, boolean encoders, double[] PIDCoeffs, double cutoffFreq1, double cutoffFreq2) {
 
         opMode = opModeParam;
         telemetry = opMode.telemetry;
         this.PIDCoeffs = PIDCoeffs;
-        this.alpha = alpha;
-        this.targetRPM = targetRPM;
+//        this.targetRPM = targetRPM;
 
         motor = opMode.hardwareMap.get(DcMotorEx.class, this.name);
 
         if (this.reverseDirection) motor.setDirection(DcMotor.Direction.REVERSE);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         if (encoders) {
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         else {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            double targetTicksPerSec = targetRPM * 60 * ticksPerRev;
+            Biquadfilter = new BiquadLowPass(opMode, sampleHz, cutoffFreq1, cutoffFreq2, targetTicksPerSec);
         }
 
     }
@@ -76,17 +80,17 @@ public class MotorClass {
     // autonomous
 
     public void runToPosition(int position) {
-        runToPosition(position, false, this.maxSpeed); }
+        runToPosition(position, true, this.maxSpeed); }
     public void runToPosition(int position, boolean isSynchronous) {
         runToPosition(position, isSynchronous, this.maxSpeed); }
 
     public void runToPosition(int position, boolean isSynchronous, double speed) {
-        //int target = position;
-        motor.setTargetPosition(position);
+        int target = position;
+        motor.setTargetPosition(target);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorCurrentSpeed = speed;
-        motor.setPower(motorCurrentSpeed);
-        if (isSynchronous) waitForMotor();
+        motorCurrentPower = speed;
+        motor.setPower(motorCurrentPower);
+        if (!isSynchronous) waitForMotor();
     }
 
     public void waitForMotor() {
@@ -113,11 +117,11 @@ public class MotorClass {
 
     }
 
-    public void teleOpBool(boolean button1, boolean reverseButton, boolean halfPower, float halfPowerMultiplier) {
+    public void teleOpBool(boolean button1, boolean reverseButton, boolean halfPower) {
         double speed = 0;
         if (button1 || reverseButton){
             if (halfPower) {
-                speed = halfPowerMultiplier;
+                speed = 1;
             } else {
                 speed = 1;
             }
@@ -131,11 +135,10 @@ public class MotorClass {
         printData();
     }
 
-    public void teleOpSetVelocity(boolean button1, boolean reverseButton) {
-//        this.PIDCoeffs[1] = 0;
-//        this.PIDCoeffs[2] = 0;
+    public void teleOpSetVelocity(boolean button1, boolean reverseButton, double targetRPM) {
+        double targetVelocityTicks = ticksPerRev * (targetRPM / 60);
         if (button1) {
-            setConstVelocity(this.PIDCoeffs, this.targetRPM);
+            setConstVelocity(targetVelocityTicks);
         } else if (reverseButton) {
             motor.setPower(-1*maxSpeed);
         }
@@ -144,26 +147,27 @@ public class MotorClass {
         }
     }
 
-    public void setConstVelocity(double[] PIDCoeffs, double rpm) {
-        double targetVelocity = ticksPerRev * (rpm / 60);
+    public void setConstVelocity(double targetVelocityTicks) {
+        setConstVelocity(targetVelocityTicks, 0);
+    }
+    public void setConstVelocity(double targetVelocityTicks, int targetTicks) {
 
-        if (loopTimer.seconds() > LOOP_PERIOD) {
-            loopTimer.reset();
-            double rawVelocity = motor.getVelocity();
-            avgV = 0;
-            for (int i = 0; i <= windowSize - 2; i++) {
-                velocities[i] = velocities[i+1];
-                avgV += velocities[i];
+        double currentPos = motor.getCurrentPosition();
+
+        if (targetTicks == 0 || currentPos < targetTicks){
+            if (loopTimer.seconds() > LOOP_PERIOD) {
+                loopTimer.reset();
+                motorRawVelocity = motor.getVelocity();
+
+                filteredVelocity = Biquadfilter.filter(motorRawVelocity);
+                double power = PIDControl(this.PIDCoeffs, targetVelocityTicks, filteredVelocity);
+                motor.setPower(power);
             }
-            velocities[windowSize - 1] = rawVelocity;
-            avgV = (avgV + rawVelocity) / windowSize;
-
-            filteredVelocity = alpha * filteredVelocity + (1 - alpha) * avgV;
-            double power = PIDControl(PIDCoeffs, targetVelocity, filteredVelocity);
-            motor.setPower(power);
+        } else{
+            stopMotor();
         }
 
-        telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocity));
+        telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocityTicks));
         telemetry.addLine(String.format("\n%1$svelocity: %2$s", this.name, filteredVelocity));
         telemetry.update();
     }
@@ -172,10 +176,12 @@ public class MotorClass {
         motor.setPower(0);
         integralSum = 0;
         lastError = 0;
+        motorRawVelocity = 0;
         filteredVelocity = 0;
-        velocities = new double[windowSize];
         timer.reset();
         loopTimer.reset();
+        Biquadfilter.reset();
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public double PIDControl(double[] PIDCoeffs, double target, double state){
@@ -200,7 +206,14 @@ public class MotorClass {
     public void printData() {
         telemetry.addLine(String.format("\n%1$s Running: %2$s", this.name, motor.isBusy()));
         telemetry.addLine(String.format("\n%1$s position: %2$s", this.name, motor.getCurrentPosition()));
-        telemetry.addLine(String.format("%1$s speed: %2$s", this.name, motorCurrentSpeed));
+        telemetry.addLine(String.format("%1$s power: %2$s", this.name, motor.getPower()));
+    }
+
+    public void printVandPData() {
+        telemetry.addLine(String.format("\n%1$s Running: %2$s", this.name, motor.isBusy()));
+        telemetry.addData(String.format("\n%1$s raw velocity", this.name), motorRawVelocity);
+        telemetry.addData(String.format("\n%1$s filtered velocity", this.name), filteredVelocity);
+        telemetry.addData(String.format("%1$s power", this.name), motor.getPower());
     }
 
 }

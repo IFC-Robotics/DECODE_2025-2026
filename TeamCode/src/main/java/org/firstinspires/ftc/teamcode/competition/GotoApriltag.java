@@ -23,11 +23,11 @@ public class GotoApriltag extends LinearOpMode {
         setManualExposure(6, 250);
         waitForStart();
         while(opModeIsActive()){
-            AprilTagDetection detectedAprilTag = Robot.aprilTagWebcam.detectAprilTags();
-            if(Objects.nonNull(detectedAprilTag)) {
-                if (Arrays.asList(new Integer[]{21, 22, 23}).contains(detectedAprilTag.id)) {
-                    apriltag = detectedAprilTag;
-                    Robot.aprilTagWebcam.desiredTagId = detectedAprilTag.id;
+            AprilTagDetection detectedapriltag = Robot.aprilTagWebcam.detectAprilTags();
+            if(Objects.nonNull(detectedapriltag)) {
+                if (Arrays.asList(new Integer[]{21, 22, 23}).contains(detectedapriltag.id)) {
+                    apriltag = detectedapriltag;
+                    Robot.aprilTagWebcam.desiredTagId = detectedapriltag.id;
                     telemetry.addData("Found", "ID %d (%s)", apriltag.id, apriltag.metadata.name);
                     telemetry.addData("Range",  "%5.1f inches", apriltag.ftcPose.range);
                     telemetry.addData("Bearing","%3.0f degrees", apriltag.ftcPose.bearing);
@@ -78,7 +78,7 @@ public class GotoApriltag extends LinearOpMode {
                 exposureControl.setMode(ExposureControl.Mode.Manual);
                 sleep(50);
             }
-            exposureControl.setExposure(exposureMS, TimeUnit.MILLISECONDS);
+            exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
             sleep(20);
             GainControl gainControl = Robot.aprilTagWebcam.visionPortal.getCameraControl(GainControl.class);
             gainControl.setGain(gain);

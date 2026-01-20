@@ -15,18 +15,18 @@ public class LaunchAutonRed extends LinearOpMode {
         Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
 //        Robot.drivetrain.drive(-34,0.5);
 //        Robot.drivetrain.turn(180,0.5);
-        int target = 9500;
+        int target = 10500;
 
         Robot.motorLaunchR.motor.setTargetPosition(target);
         Robot.motorLaunchR.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchR.motor.setPower(0.35);
+        Robot.motorLaunchR.motor.setPower(0.37);
 
         Robot.motorLaunchL.motor.setTargetPosition(target);
         Robot.motorLaunchL.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Robot.motorLaunchL.motor.setPower(0.35);
+        Robot.motorLaunchL.motor.setPower(0.37);
         Robot.servoLauncher.runToPosition("up");
 
-        sleep(2000);
+        sleep(3000);
 //        Robot.motorConveyor.motor.setTargetPosition(200);
 //        Robot.motorConveyor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        Robot.motorConveyor.motor.setPower(1);
@@ -58,7 +58,7 @@ public class LaunchAutonRed extends LinearOpMode {
         sleep(1500);
         Robot.servoLauncher.runToPosition("down");
         sleep(1000);
-        Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, true);
+        Robot.drivetrain.moveDrivetrain(1000, 1000, 1000, 1000, -0.5, -0.5, -0.5, -0.5, true);
 
         sleep(1500);
 

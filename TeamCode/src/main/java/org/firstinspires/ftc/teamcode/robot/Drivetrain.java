@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Objects;
@@ -67,15 +69,15 @@ public class Drivetrain {
 
     // autonomous
 
-    public void drive (double distance, double speed) { drive(distance, speed, true); }
-    public void strafe(double distance, double speed) { strafe(distance, speed, true); }
-    public void turn  (double angle,    double speed) { turn(angle,    speed, true); }
+    public void drive (double distance, double speed) { drive(distance, speed, false); }
+    public void strafe(double distance, double speed) { strafe(distance, speed, false); }
+    public void turn  (double angle,    double speed) { turn(angle,    speed, false); }
 
-    public void drive(double distance, double speed, boolean isSynchronous) {
+    public void drive(double distance, double speed, boolean isSynchronous) { // set speed negative to go backwards
 
         telemetry.addLine(String.format("\ndriving %s inches", distance));
 
-        int target = inchesToTicks(distance);
+        int target = (int)(inchesToTicks(distance));
         double power = Math.signum(distance) * speed;
 
         moveDrivetrain(target, target, target, target, power, power, power, power, isSynchronous);
@@ -93,18 +95,18 @@ public class Drivetrain {
 
     }
 
-    public void turn(double angle, double speed, boolean isSynchronous) {
+    public void turn(double angle, double speed, boolean isSynchronous) { // default is turning right
 
         telemetry.addLine(String.format("\nturning %s degrees", angle));
 
-        double radius = 2.2;
+        double radius = 2; // inches
         double circumference = 2 * Math.PI * radius;
         double distance = circumference * angle / 360;
         int target = (int)(distance * TURN_FACTOR);
 
         double power = Math.signum(angle) * speed;
 
-        moveDrivetrain(target, -target, target, -target, power, -power, power, -power, isSynchronous);
+        moveDrivetrain(-target, target, -target, target, -power, power, -power, power, isSynchronous);
 
     }
 
@@ -125,7 +127,7 @@ public class Drivetrain {
         motorBackRight.setPower(powerBackRight);
         motorBackLeft.setPower(powerBackLeft);
 
-        if (isSynchronous) waitForDrivetrain();
+        if (!isSynchronous) waitForDrivetrain();
 
     }
 
@@ -277,7 +279,7 @@ public class Drivetrain {
     public static int inchesToTicks(double inches) {
 
         double TICKS_PER_REV = 560; // 28, 560, 1120
-        double WHEEL_RADIUS = 1.88976; // measure
+        double WHEEL_RADIUS = 2; // measure
         double GEAR_RATIO = 20; // 1, 20, 40
 
         double wheelCircumference = 2 * Math.PI * WHEEL_RADIUS;
