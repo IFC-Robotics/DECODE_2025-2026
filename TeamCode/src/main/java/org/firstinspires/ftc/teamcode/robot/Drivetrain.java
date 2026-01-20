@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Objects;
@@ -77,7 +75,7 @@ public class Drivetrain {
 
         telemetry.addLine(String.format("\ndriving %s inches", distance));
 
-        int target = (int)(inchesToTicks(distance));
+        int target = inchesToTicks(distance);
         double power = Math.signum(distance) * speed;
 
         moveDrivetrain(target, target, target, target, power, power, power, power, isSynchronous);

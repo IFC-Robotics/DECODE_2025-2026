@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot;
 
-import android.graphics.Camera;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;

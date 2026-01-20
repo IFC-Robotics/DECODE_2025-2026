@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import java.util.List;
-
 public class MotorClass {
 
     public LinearOpMode opMode;
@@ -83,8 +81,8 @@ public class MotorClass {
         runToPosition(position, isSynchronous, this.maxSpeed); }
 
     public void runToPosition(int position, boolean isSynchronous, double speed) {
-        int target = position;
-        motor.setTargetPosition(target);
+        //int target = position;
+        motor.setTargetPosition(position);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorCurrentSpeed = speed;
         motor.setPower(motorCurrentSpeed);
@@ -115,11 +113,11 @@ public class MotorClass {
 
     }
 
-    public void teleOpBool(boolean button1, boolean reverseButton, boolean halfPower) {
+    public void teleOpBool(boolean button1, boolean reverseButton, boolean halfPower, float halfPowerMultiplier) {
         double speed = 0;
         if (button1 || reverseButton){
             if (halfPower) {
-                speed = 1;
+                speed = halfPowerMultiplier;
             } else {
                 speed = 1;
             }
@@ -147,7 +145,7 @@ public class MotorClass {
     }
 
     public void setConstVelocity(double[] PIDCoeffs, double rpm) {
-        double targetVelocity = ticksPerRev * ((double) rpm / 60);
+        double targetVelocity = ticksPerRev * (rpm / 60);
 
         if (loopTimer.seconds() > LOOP_PERIOD) {
             loopTimer.reset();

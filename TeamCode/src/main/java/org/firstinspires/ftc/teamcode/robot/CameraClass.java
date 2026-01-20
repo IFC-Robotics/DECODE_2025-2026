@@ -3,9 +3,7 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -23,7 +21,7 @@ public class CameraClass {
     public AprilTagProcessor aprilTagProcessor;
     private AprilTagDetection detectedTag;
     public int desiredTagId = -1;
-    private boolean aprilTagFound = false;
+    public boolean aprilTagFound = false;
     public CameraClass(String name) {
         this.name = name;
     }

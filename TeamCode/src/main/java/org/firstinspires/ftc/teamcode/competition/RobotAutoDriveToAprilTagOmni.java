@@ -29,12 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.competition;
 
-import android.os.DropBoxManager;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -111,7 +107,7 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
     private static final int DESIRED_TAG_ID = -1;     // Choose the tag you want to approach or set to -1 for ANY tag.
     private VisionPortal visionPortal;               // Used to manage the video source.
     private AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
-    private AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
+    public AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
 
     @Override public void runOpMode()
     {
@@ -186,7 +182,7 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
                 telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
             } else {
 
-                // drive using manual POV Joystick mode.  Slow things down to make the robot more controlable.
+                // drive using manual POV Joystick mode.  Slow things down to make the robot more controllable.
                 drive  = -gamepad1.left_stick_y  / 2.0;  // Reduce drive rate to 50%.
                 strafe = -gamepad1.left_stick_x  / 2.0;  // Reduce strafe rate to 50%.
                 turn   = -gamepad1.right_stick_x / 3.0;  // Reduce turn rate to 33%.
@@ -200,7 +196,7 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
         }
     }
 
-    /**
+    /*
      * Move robot according to desired axes motions
      * <p>
      * Positive X is forward
@@ -270,7 +266,7 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
                 exposureControl.setMode(ExposureControl.Mode.Manual);
                 sleep(50);
             }
-            exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+            exposureControl.setExposure(exposureMS, TimeUnit.MILLISECONDS);
             sleep(20);
             GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
             gainControl.setGain(gain);
