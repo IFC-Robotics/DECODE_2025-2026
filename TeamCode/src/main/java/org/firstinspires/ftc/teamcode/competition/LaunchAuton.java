@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Autonomous(name="LaunchAutonBlue", group="Competition")
 public class LaunchAuton extends LinearOpMode {
-    int targetVelocity = 900;
+    int targetVelocity = 600;
     int target = targetVelocity * 11;
 
     @Override
@@ -31,6 +31,7 @@ public class LaunchAuton extends LinearOpMode {
 //        Robot.motorLaunchL.motor.setPower(0.375);
 
         Robot.motorLaunchL.setConstVelocity(targetVelocity, target);
+        Robot.motorLaunchR.setConstVelocity(targetVelocity, target);
 
         Robot.servoLauncher.runToPosition("up");
         sleep(3000);
