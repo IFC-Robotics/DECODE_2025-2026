@@ -2,14 +2,12 @@ package org.firstinspires.ftc.teamcode.competition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Autonomous(name="LaunchAutonBlue", group="Competition")
 public class LaunchAuton extends LinearOpMode {
-    int targetVelocity = 600;
-    int target = targetVelocity * 11;
+    int targetVelocity = 700; // Ticks per second   28 ticks per revolution
+    int target = targetVelocity * 10; // Amount of seconds
 
     @Override
     public void runOpMode() {
@@ -34,7 +32,7 @@ public class LaunchAuton extends LinearOpMode {
         Robot.motorLaunchR.setConstVelocity(targetVelocity, target);
 
         Robot.servoLauncher.runToPosition("up");
-        sleep(3000);
+        sleep(2500);
         Robot.servoLauncher.runToPosition("down");
         sleep(1000);
         Robot.servoLauncher.runToPosition("up");
@@ -71,6 +69,8 @@ public class LaunchAuton extends LinearOpMode {
         Robot.drivetrain.turn(135, 0.5);
         Robot.drivetrain.drive(45, 0.5, true);
         Robot.motorIntake.runToPosition(1500, true);
+        Robot.motorConveyor.runToPosition(1500, true, 1);
+        sleep(10000);
 //        Robot.drivetrain.moveDrivetrain(1500, -1500, -1500, 1500, -0.5, 0.5, 0.5, -0.5, true);
 
         while (opModeIsActive() && Robot.motorLaunchR.motor.isBusy()) {
@@ -82,5 +82,4 @@ public class LaunchAuton extends LinearOpMode {
         // Optional: Stop the motor after reaching position
         Robot.motorLaunchR.motor.setPower(0);
     }
-
-    }
+}
