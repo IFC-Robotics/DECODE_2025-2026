@@ -29,6 +29,7 @@ public class MotorClass {
 
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime loopTimer = new ElapsedTime();
+    ElapsedTime motorRunningTimer = new ElapsedTime();
     public static double LOOP_PERIOD = 0.02;
     double sampleHz = 1 / LOOP_PERIOD;
 
@@ -150,11 +151,13 @@ public class MotorClass {
     public void setConstVelocity(double targetVelocityTicks) {
         setConstVelocity(targetVelocityTicks, 0);
     }
-    public void setConstVelocity(double targetVelocityTicks, int targetTicks) {
+    public void setConstVelocity(double targetVelocityTicks, int runTimeSeconds) {
 
-        double currentPos = motor.getCurrentPosition();
+        if (!motor.isBusy()) {
+            motorRunningTimer.reset();
+        }
 
-        if (targetTicks == 0 || currentPos < targetTicks){
+        if (runTimeSeconds == 0 || motorRunningTimer.seconds() < runTimeSeconds){
             if (loopTimer.seconds() > LOOP_PERIOD) {
                 loopTimer.reset();
                 motorRawVelocity = motor.getVelocity();
@@ -180,6 +183,7 @@ public class MotorClass {
         filteredVelocity = 0;
         timer.reset();
         loopTimer.reset();
+        motorRunningTimer.reset();
         Biquadfilter.reset();
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }

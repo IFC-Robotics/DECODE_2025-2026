@@ -31,10 +31,13 @@ public class PIDTest extends LinearOpMode {
     public static double kI = 0.0;
     public static double kD = 0.0005;
     public static double kV = 0.00055;
-    public static double alpha = 0.97;
 //    public static double power = 0.3;
-    double cutoffFreq1 = 5;
-    double cutoffFreq2 = 0.5;
+    public static double cutoffFreq1 = 5;
+    public static double cutoffFreq2 = 0.5;
+
+    public static boolean PIDOn = true;
+    public static double topLine = 820;
+    public static double bottomLine = 780;
 
     FtcDashboard dashboard; // http://192.168.43.1:8080/dash is the link to the dashboard
     Telemetry dashboardTelemetry;
@@ -51,8 +54,6 @@ public class PIDTest extends LinearOpMode {
 
     private double lastError = 0;
     double filteredVelocity = 0;
-    double filteredVelocity1 = 0;
-    double filteredVelocity2 = 0;
 
     MotorClass motor;
 
@@ -118,8 +119,12 @@ public class PIDTest extends LinearOpMode {
 
 //            filteredVelocity1 = alpha * filteredVelocity1 + (1 - alpha) * avgV;
 //            filteredVelocity2 = alpha * filteredVelocity2 + (1 - alpha) * filteredVelocity;
-
-            double power = PIDControl(targetVelocity, filteredVelocity);
+            double power;
+            if (PIDOn){
+                power = PIDControl(targetVelocity, filteredVelocity);
+            } else {
+                power = kV * targetVelocity;
+            }
             motor.motor.setPower(power);
             double voltage = voltageSensor.getVoltage();
 
@@ -147,6 +152,8 @@ public class PIDTest extends LinearOpMode {
 //            telemetry.addData("Avg Velocity", avgV);
 
             telemetry.addData("Target velocity", targetVelocity);
+            telemetry.addData("Top", topLine);
+            telemetry.addData("Bottom", bottomLine);
 //            telemetry.addData("Power", power);
             telemetry.update();
         }
@@ -177,14 +184,7 @@ public class PIDTest extends LinearOpMode {
 
         double pid = kP * error + kI * integralSum + kD * derivative;
         double ff = kV * target;
-        double power;
-        if (state / target > 0.8) {
-            power = pid + ff;
-        }
-        else {
-            power = ff;
-        }
 
-        return Math.max(-1, Math.min(1, power));
+        return Math.max(-1, Math.min(1, pid + ff));
     }
 }
