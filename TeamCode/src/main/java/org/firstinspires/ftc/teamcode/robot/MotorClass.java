@@ -149,15 +149,27 @@ public class MotorClass {
     }
 
     public void setConstVelocity(double targetVelocityTicks) {
-        setConstVelocity(targetVelocityTicks, 0);
+        if (loopTimer.seconds() > LOOP_PERIOD) {
+            loopTimer.reset();
+            motorRawVelocity = motor.getVelocity();
+
+            filteredVelocity = Biquadfilter.filter(motorRawVelocity);
+            double power = PIDControl(this.PIDCoeffs, targetVelocityTicks, filteredVelocity);
+            motor.setPower(power);
+        }
+        else{
+            stopMotor();
+        }
+        telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocityTicks));
+        telemetry.addLine(String.format("\n%1$svelocity: %2$s", this.name, filteredVelocity));
+        telemetry.update();
     }
     public void setConstVelocity(double targetVelocityTicks, int runTimeSeconds) {
-
         if (!motor.isBusy()) {
             motorRunningTimer.reset();
         }
 
-        if (runTimeSeconds == 0 || motorRunningTimer.seconds() < runTimeSeconds){
+        while (motorRunningTimer.seconds() < runTimeSeconds && opMode.opModeIsActive()) {
             if (loopTimer.seconds() > LOOP_PERIOD) {
                 loopTimer.reset();
                 motorRawVelocity = motor.getVelocity();
@@ -166,9 +178,9 @@ public class MotorClass {
                 double power = PIDControl(this.PIDCoeffs, targetVelocityTicks, filteredVelocity);
                 motor.setPower(power);
             }
-        } else{
-            stopMotor();
         }
+
+        stopMotor();
 
         telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocityTicks));
         telemetry.addLine(String.format("\n%1$svelocity: %2$s", this.name, filteredVelocity));
