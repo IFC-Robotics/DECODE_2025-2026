@@ -2,17 +2,31 @@ package org.firstinspires.ftc.teamcode.competition;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Autonomous(name="LaunchAutonBlue", group="Competition")
 public class LaunchAuton extends LinearOpMode {
-    int targetVelocity = 700; // Ticks per second   28 ticks per revolution
-    int target = targetVelocity * 10; // Amount of seconds
+    int targetVelocity = 500; // Ticks per second   28 ticks per revolution
+    int targetSeconds = 12; // Amount of seconds
+
+    ElapsedTime timer = new ElapsedTime();
 
     @Override
     public void runOpMode() {
         Robot.init(this, false,false);
         waitForStart();
+        while (opModeIsActive()) {
+            if (timer.seconds() < targetSeconds) {
+                Robot.motorLaunchL.setConstVelocity(targetVelocity);
+                Robot.motorLaunchR.setConstVelocity(targetVelocity);
+            } else {
+                Robot.motorLaunchL.stopMotor();
+                Robot.motorLaunchR.stopMotor();
+            }
+        }
+
         Robot.drivetrain.drive(34, -0.5);
 //        Robot.drivetrain.moveDrivetrain(1650, 1650, 1650, 1650, -0.5, -0.5, -0.5, -0.5, false);
 
@@ -27,9 +41,6 @@ public class LaunchAuton extends LinearOpMode {
 //        Robot.motorLaunchL.motor.setTargetPosition(target);
 //        Robot.motorLaunchL.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        Robot.motorLaunchL.motor.setPower(0.375);
-
-        Robot.motorLaunchL.setConstVelocity(targetVelocity, target);
-        Robot.motorLaunchR.setConstVelocity(targetVelocity, target);
 
         Robot.servoLauncher.runToPosition("up");
         sleep(2500);
@@ -73,13 +84,6 @@ public class LaunchAuton extends LinearOpMode {
         sleep(10000);
 //        Robot.drivetrain.moveDrivetrain(1500, -1500, -1500, 1500, -0.5, 0.5, 0.5, -0.5, true);
 
-        while (opModeIsActive() && Robot.motorLaunchR.motor.isBusy()) {
-            telemetry.addData("Launch Motor Position", Robot.motorLaunchR.motor.getCurrentPosition());
-            telemetry.addData("Target", target);
-            telemetry.update();
-        }
 
-        // Optional: Stop the motor after reaching position
-        Robot.motorLaunchR.motor.setPower(0);
     }
 }

@@ -157,12 +157,10 @@ public class MotorClass {
             double power = PIDControl(this.PIDCoeffs, targetVelocityTicks, filteredVelocity);
             motor.setPower(power);
         }
-        else{
-            stopMotor();
-        }
-        telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocityTicks));
-        telemetry.addLine(String.format("\n%1$svelocity: %2$s", this.name, filteredVelocity));
-        telemetry.update();
+
+//        telemetry.addLine(String.format("\n%1$s target velocity: %2$s", this.name, targetVelocityTicks));
+//        telemetry.addLine(String.format("\n%1$svelocity: %2$s", this.name, filteredVelocity));
+//        telemetry.update();
     }
     public void setConstVelocity(double targetVelocityTicks, int runTimeSeconds) {
         if (!motor.isBusy()) {
@@ -197,7 +195,6 @@ public class MotorClass {
         loopTimer.reset();
         motorRunningTimer.reset();
         Biquadfilter.reset();
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public double PIDControl(double[] PIDCoeffs, double target, double state){
