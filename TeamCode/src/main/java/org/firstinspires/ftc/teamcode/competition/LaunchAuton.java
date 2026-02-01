@@ -57,14 +57,15 @@ public class LaunchAuton extends LinearOpMode {
         sleep(1000);
         Robot.servoLauncher.runToPosition("up");
 
-        Robot.motorIntake.resetMotor();
-        Robot.motorConveyor.resetMotor();
-
         Robot.drivetrain.drive(10, 0.5);
         Robot.drivetrain.turn(150, 0.5);
         Robot.drivetrain.strafe(5, 0.5);
+
+        Robot.motorIntake.resetMotor();
+        Robot.motorConveyor.resetMotor();
+
         Robot.drivetrain.drive(30, 0.5, true);
-        Robot.motorIntake.runToPosition(500, true);
+        Robot.motorIntake.runToPosition(1000, true);
         sleep(1500);
         Robot.motorConveyor.runToPosition(1000, true, 1);
         sleep(500);
