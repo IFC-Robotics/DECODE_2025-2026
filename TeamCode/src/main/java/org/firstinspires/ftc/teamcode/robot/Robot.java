@@ -19,6 +19,8 @@ public class Robot {
     public static MotorClass motorLaunchR;
     public static MotorClass motorConveyor;
     public static CameraClass aprilTagWebcam;
+    public static MotorClass flywheel1;
+    public static MotorClass flywheel2;
 
     public static MotorClass motorArm;
     //    public static MotorClass motorPulley;
@@ -61,6 +63,8 @@ public class Robot {
             motorLaunchL = new MotorClass("motor_launch_left", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, false);
             motorLaunchR = new MotorClass("motor_launch_right", MAX_MOTOR_SPEED*0.35, SLEEP_TIME, true);
             motorConveyor = new MotorClass("motor_conveyor", MAX_MOTOR_SPEED, SLEEP_TIME, true);
+            flywheel1  = new MotorClass("motor_fly_wheel_1", MAX_MOTOR_SPEED, SLEEP_TIME, true);
+            flywheel2  = new MotorClass("motor_fly_wheel_2", MAX_MOTOR_SPEED, SLEEP_TIME, true);
             if(useCamera){
                 aprilTagWebcam = new CameraClass("webcam");
                 aprilTagWebcam.init(opMode);
@@ -76,6 +80,7 @@ public class Robot {
             motorLaunchL.init(opMode, false, LAUNCH_L_PID_COEFFS, cutoffFreq1, cutoffFreq2);
             motorLaunchR.init(opMode, false, LAUNCH_R_PID_COEFFS, cutoffFreq1, cutoffFreq2);
             motorConveyor.init(opMode);
+
 
         }
 
