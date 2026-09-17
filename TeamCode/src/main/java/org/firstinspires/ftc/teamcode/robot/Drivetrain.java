@@ -286,6 +286,7 @@ public class Drivetrain {
         double ticksPerInch = TICKS_PER_REV / (wheelCircumference);
 
         return (int)(inches * ticksPerInch);
+        //return (int)(inches * 560 / (4 * Math.PI));
 
     }
 
