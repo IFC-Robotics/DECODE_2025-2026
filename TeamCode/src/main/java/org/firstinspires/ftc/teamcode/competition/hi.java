@@ -12,12 +12,9 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 public class hi extends LinearOpMode {
     @Override
     public void runOpMode() {
-        waitForStart();
-        telemetry.addLine("helloWorld");
-        telemetry.update();
-        Robot.motorIntake.teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100 );
-
-
-
+            waitForStart();
+        while (opModeIsActive()) {
+            Robot.motorIntake.teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100);
+        }
     }
 }
