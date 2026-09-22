@@ -8,9 +8,11 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 @TeleOp(name = "flyWheels")
 public class flyWheels extends LinearOpMode {
     public void runOpMode() {
+        Robot.init(this, false,false);
         waitForStart();
-        Robot.flywheel1 .teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100 );
-        Robot.flywheel2 .teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100 );
+
+        Robot.flywheel1.teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100 );
+        Robot.flywheel2.teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100 );
 
 
 
