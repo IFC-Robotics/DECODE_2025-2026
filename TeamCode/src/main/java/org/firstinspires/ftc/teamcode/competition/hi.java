@@ -10,11 +10,21 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @TeleOp(name = "1MotorIntake")
 public class hi extends LinearOpMode {
+    private DcMotor motorIn;
+
     @Override
     public void runOpMode() {
-            waitForStart();
+        motorIn = hardwareMap.get(DcMotor.class, "Motor_In");
+        waitForStart();
         while (opModeIsActive()) {
-            Robot.motorIntake.teleOpSetVelocity(gamepad1.right_bumper, gamepad1.left_bumper, 100);
+            if (gamepad1.a) {
+                motorIn.setPower(1);
+            }
+            else{
+                    motorIn.setPower(0);
+                }
+            }
         }
     }
-}
+
+
